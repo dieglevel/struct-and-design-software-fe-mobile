@@ -29,25 +29,29 @@ export const ItemTypeTicket = ({ title, description, price, value, setValue }: P
 				</Text>
 			</View>
 			<View style={styles.counter}>
-				<AntDesign
-					name="minus"
-					size={10}
-					color="black"
-					onPress={() => {
-						if (value > 1) {
-							setValue(value - 1);
-						}
-					}}
-				/>
+				<TouchableOpacity style={{ padding: 8 }}>
+					<AntDesign
+						name="minus"
+						size={10}
+						color="black"
+						onPress={() => {
+							if (value > 0) {
+								setValue(value - 1);
+							}
+						}}
+					/>
+				</TouchableOpacity>
 				<Text>{value}</Text>
-				<TouchableOpacity>
+				<TouchableOpacity
+					style={{ padding: 8 }}
+					onPress={() => {
+						setValue(value + 1);
+					}}
+				>
 					<AntDesign
 						name="plus"
 						size={10}
 						color="black"
-						onPress={() => {
-							setValue(value + 1);
-						}}
 					/>
 				</TouchableOpacity>
 			</View>

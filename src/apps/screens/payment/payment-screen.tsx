@@ -3,8 +3,9 @@ import { SelectDate } from "@/apps/components/payment/select-date";
 import { Colors } from "@/constants";
 import { localePrice } from "@/utils";
 import { AntDesign } from "@expo/vector-icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, FlatList } from "react-native";
+import Toast from "react-native-toast-message";
 
 const date: Date[] = [
 	new Date("2025-01-31"),
@@ -19,6 +20,24 @@ export const PaymentScreen = () => {
 	const [adultCount, setAdultCount] = useState<number>(1);
 	const [childCount, setChildCount] = useState<number>(0);
 	const [infantCount, setInfantCount] = useState<number>(0);
+
+   const [isDisabled, setIsDisabled] = useState<boolean>(false);
+
+   useEffect(() => {
+      if (adultCount === 0 && childCount === 0 && infantCount === 0) {
+         setIsDisabled(true);
+      } else {
+         setIsDisabled(false);
+      }
+   }, [[adultCount, childCount, infantCount]]);
+
+	const handleBookTicket = () => {
+
+      const totalPrice = adultCount * 2000000 + childCount * 2000000 + infantCount * 2000000;
+	};
+
+
+
 
 	return (
 		<View style={styles.container}>
@@ -87,6 +106,7 @@ export const PaymentScreen = () => {
 							backgroundColor: "white",
 							paddingVertical: 16,
 							gap: 8,
+							borderRadius: 8,
 						},
 						styles.priceSection,
 					]}
@@ -119,7 +139,7 @@ export const PaymentScreen = () => {
 			</View>
 
 			{/* Button */}
-			<TouchableOpacity style={styles.button}>
+			<TouchableOpacity style={[styles.button, {opacity: isDisabled ? 0.5 : 1}]} onPress={handleBookTicket} disabled={isDisabled}>
 				<Text style={styles.buttonText}>Đặt ngay</Text>
 				<Text style={{ fontSize: 16, color: "white", fontWeight: "bold" }}>
 					{localePrice(adultCount * 2000000 + childCount * 2000000 + infantCount * 2000000)}
@@ -184,9 +204,9 @@ const styles = StyleSheet.create({
 		width: 60,
 	},
 	button: {
-		backgroundColor: "#ff5722",
+		backgroundColor: Colors.colorBrand.burntSienna[500],
 		padding: 16,
-		borderRadius: 8,
+		paddingHorizontal: 32,
 		alignItems: "center",
 		justifyContent: "space-between",
 		flexDirection: "row",
