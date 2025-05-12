@@ -181,7 +181,7 @@ export const TourDetailScreen = () => {
 
 								<View style={{ flex: 1, minHeight: 400 }}>
 									<TourDetail
-										schedules={schedules}
+										schedules={data?.tourDestinationResponses || []}
 										ratingDetails={ratingDetails}
 										commentData={commentData}
 									/>
@@ -304,38 +304,6 @@ const styles = StyleSheet.create({
 	// backgroundColor: "#fff",
 });
 
-const schedules = [
-	{
-		day: "Ngày 1",
-		route: "TP. Hồ Chí Minh - Incheon - Seoul",
-		meals: "02 (trưa, tối)",
-		description: "Sáng sớm: HDV đón Quý khách tại Cổng D2 Ga đi QT Sân bay TSN làm thủ tục xuất cảnh đi Paris...",
-	},
-	{
-		day: "Ngày 2",
-		route: "Seoul - Nami Island",
-		meals: "03 (sáng, trưa, tối)",
-		description: "Tham quan đảo Nami, địa điểm nổi tiếng trong phim Bản tình ca mùa đông...",
-	},
-	{
-		day: "Ngày 3",
-		route: "Seoul City Tour",
-		meals: "03 (sáng, trưa, tối)",
-		description: "Tham quan Cung điện Gyeongbokgung, bảo tàng dân gian quốc gia và Nhà Xanh Phủ Tổng Thống...",
-	},
-	{
-		day: "Ngày 4",
-		route: "Seoul - Everland",
-		meals: "03 (sáng, trưa, tối)",
-		description: "Khởi hành đi công viên Everland – một trong những công viên giải trí lớn nhất Hàn Quốc...",
-	},
-	{
-		day: "Ngày 5",
-		route: "Seoul - TP. Hồ Chí Minh",
-		meals: "02 (sáng, trưa)",
-		description: "Tham quan mua sắm tại cửa hàng nhân sâm, mỹ phẩm. Đáp chuyến bay về lại Việt Nam...",
-	},
-];
 
 const commentData = [
 	{

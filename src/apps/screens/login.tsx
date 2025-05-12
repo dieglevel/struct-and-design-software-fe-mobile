@@ -14,6 +14,7 @@ import { useAppDispatch } from "@/libs/redux/redux.config";
 import { fetchUserProfile } from "@/libs/redux/thunks/user.thunk";
 import { fetchFavoriteTours } from "@/libs/redux/thunks/tour.thunk";
 import { fetchHistoryTours } from "@/libs/redux/thunks/tour.thunk";
+import { getProfile } from "@/services/user-service";
 
 export const LoginScreen = () => {
 	const [username, setUsername] = useState<string>("hyuga");
@@ -28,6 +29,7 @@ export const LoginScreen = () => {
 	const handleLogin = async () => {
 		try {
 			const result = await loginApi(username, password);
+			console.log("result", result);
 			if (result.statusCode === 200) {
 				Toast.show({
 					type: "success",
@@ -49,7 +51,9 @@ export const LoginScreen = () => {
 					});
 				}
 			}
+			
 		} catch (error) {
+
 			const err = error as BaseResponse<any>;
 			if (err.statusCode === 401) {
 				Toast.show({
@@ -157,6 +161,7 @@ export const LoginScreen = () => {
 							<Button
 								style={{ marginTop: 8 }}
 								onPress={() => {
+									console.log("username", username);
 									handleLogin();
 								}}
 							>

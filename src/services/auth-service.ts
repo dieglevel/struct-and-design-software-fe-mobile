@@ -4,11 +4,11 @@ import { Gateway } from "@/libs/axios";
 import { Auth, RegisterParams, RegisterResponse } from "@/types/implement";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AsyncStorageKey } from "@/libs/async-storage";
-import axios from "axios";
 
 export const loginApi = async (username: string, password: string) => {
 	try {
 		const response = await api.post<BaseResponse<Auth>>(`${Gateway.USER}/auth/token`, { username, password });
+		console.log("response", response);
 
 		const { data, statusCode } = response.data;
 		if (statusCode === 200) {

@@ -3,13 +3,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import Toast from "react-native-toast-message";
 import { AsyncStorageKey } from "../async-storage";
-import { useNavigation } from "@react-navigation/native";
-import { navigate, push, reset } from "../navigation/navigationService";
 
 export const api = axios.create({
 	baseURL: process.env.EXPO_PUBLIC_BACKEND_URL,
-	timeout: 5000,
-	headers: { "Content-Type": "application/json" },
+	headers: { "content-type": "application/json" },
 });
 
 // Interceptor trước khi gửi request
@@ -31,6 +28,8 @@ api.interceptors.request.use(
 api.interceptors.response.use(
 	(response) => response,
 	(error) => {
+		// console.error("⛔ Axios: ", error.toJSON());
+
 		const errorResponse = error.response.data as BaseResponse<null>;
 		if ((errorResponse.statusCode === 401 &&  error.config?.url !== "user-service/auth/token")) {
 			// Toast.show({

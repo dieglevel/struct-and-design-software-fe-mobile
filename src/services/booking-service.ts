@@ -9,7 +9,11 @@ import { safeApiCall } from "@/libs/axios/safe-api-call";
 import { Category } from "@/types/implement/category";
 
 export const getCategory = async (): Promise<BaseResponse<Category[] | null>> => {
-	return safeApiCall(() => api.get<BaseResponse<Category[] | null>>(`${Gateway.BOOKING}/category-tours`), []);
+	// return safeApiCall(() => api.get<BaseResponse<Category[] | null>>(`${Gateway.BOOKING}/category-tours`), []);
+	const a = await safeApiCall(() => api.get<BaseResponse<any>>(`${Gateway.BOOKING}/category-tours`), []);
+	const b = await api.get<BaseResponse<any>>(`${Gateway.BOOKING}/category-tours`);
+	return a
+
 };
 
 export const getToursByCategory = async (categoryId: string) => {

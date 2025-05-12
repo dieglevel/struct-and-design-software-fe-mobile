@@ -1,5 +1,5 @@
 import { NavigationContainer } from "@react-navigation/native";
-import { LoginScreen, SignupScreen } from "@/apps/screens";
+import { LoginScreen, PaymentScreen, SignupScreen } from "@/apps/screens";
 import { Stack } from "@/libs/navigation";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BottomTabScreenApp } from "./bottom-tab-acreen-app";
@@ -38,7 +38,7 @@ export const RootScreenApp = () => {
 			) : (
 				<NavigationContainer ref={navigationRef}>
 					<Stack.Navigator
-						initialRouteName="LoginScreen"
+						initialRouteName="PaymentScreen"
 						screenOptions={{
 							headerShown: false,
 							animation: "fade_from_bottom",
@@ -63,6 +63,10 @@ export const RootScreenApp = () => {
 						<Stack.Screen
 							name="ForgotPasswordScreen"
 							component={ForgotPasswordScreen}
+						/>
+						<Stack.Screen
+							name="PaymentScreen"
+							component={PaymentScreen}
 						/>
 					</Stack.Navigator>
 					<Toast />

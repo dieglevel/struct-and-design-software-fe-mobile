@@ -37,6 +37,7 @@ export type RootStackParamList = {
 		categoryImage: string;
 		categoryDescription: string;
 	};
+	PaymentScreen: undefined
 };
 
 declare global {

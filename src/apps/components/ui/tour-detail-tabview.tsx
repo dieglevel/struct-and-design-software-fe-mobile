@@ -3,12 +3,12 @@ import { TabBar, TabView } from "react-native-tab-view";
 import { ScheduleScene } from "../tour-detail-scenes/schedule-scene";
 import { ReviewScene } from "../tour-detail-scenes/review-scene";
 import { InfoScene } from "../tour-detail-scenes/tour-info-scene";
-import { CommentProps, RatingDetail, ScheduleItemProps } from "@/types/implement";
+import { CommentProps, RatingDetail, ScheduleItemProps, TourDestinationResponse } from "@/types/implement";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 // Định nghĩa type cho props
 interface TourDetailProps {
-	schedules: ScheduleItemProps[];
+	schedules: TourDestinationResponse[];
 	ratingDetails: RatingDetail[];
 	commentData: CommentProps[];
 }
@@ -23,7 +23,7 @@ const TourDetail: React.FC<TourDetailProps> = ({ schedules, ratingDetails, comme
 	const routes: Route[] = [
 		{ key: "schedule", title: "Lịch trình" },
 		{ key: "review", title: "Đánh giá" },
-		{ key: "info", title: "Thông tin" },
+		// { key: "info", title: "Thông tin" },
 	];
 
 	const renderScene = useCallback(
@@ -38,28 +38,28 @@ const TourDetail: React.FC<TourDetailProps> = ({ schedules, ratingDetails, comme
 							commentData={commentData}
 						/>
 					);
-				case "info":
-					return (
-						<InfoScene
-							transport={[
-								"Vé máy bay khứ hồi Vietjet Air bao gồm 7kg hành lý xách tay + 20kg hành lý ký gửi.",
-								"Xe du lịch hiện đại, điều hòa, đưa đón tham quan.",
-								"Tàu câu cá và lặn ngắm san hô với đầy đủ dụng cụ.",
-							]}
-							accommodation={[
-								"Khách sạn 3 sao tiêu chuẩn (2-3 khách/phòng).",
-								"Phòng tiện nghi điều hòa, tivi, nóng lạnh.",
-							]}
-							others={[
-								"Ăn uống theo lịch trình tham quan.",
-								"Vé vào cửa các điểm tham quan.",
-								"HDV nhiệt tình, kinh nghiệm.",
-								"Nước uống lạnh phục vụ du lịch.",
-								"Bảo hiểm du lịch mức cao nhất.",
-								"Y tế dự phòng trên xe.",
-							]}
-						/>
-					);
+				// case "info":
+				// 	return (
+				// 		<InfoScene
+				// 			transport={[
+				// 				"Vé máy bay khứ hồi Vietjet Air bao gồm 7kg hành lý xách tay + 20kg hành lý ký gửi.",
+				// 				"Xe du lịch hiện đại, điều hòa, đưa đón tham quan.",
+				// 				"Tàu câu cá và lặn ngắm san hô với đầy đủ dụng cụ.",
+				// 			]}
+				// 			accommodation={[
+				// 				"Khách sạn 3 sao tiêu chuẩn (2-3 khách/phòng).",
+				// 				"Phòng tiện nghi điều hòa, tivi, nóng lạnh.",
+				// 			]}
+				// 			others={[
+				// 				"Ăn uống theo lịch trình tham quan.",
+				// 				"Vé vào cửa các điểm tham quan.",
+				// 				"HDV nhiệt tình, kinh nghiệm.",
+				// 				"Nước uống lạnh phục vụ du lịch.",
+				// 				"Bảo hiểm du lịch mức cao nhất.",
+				// 				"Y tế dự phòng trên xe.",
+				// 			]}
+				// 		/>
+				// 	);
 				default:
 					return null;
 			}
