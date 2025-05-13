@@ -275,7 +275,7 @@ export const ProfileDetailsScreen = () => {
 							{isSaving ? (
 								<ActivityIndicator color="#fff" />
 							) : (
-								<Text style={styles.saveButtonText}>Save Changes</Text>
+								<Text style={styles.saveButtonText}>Lưu thông tin</Text>
 							)}
 						</TouchableOpacity>
 					</View>

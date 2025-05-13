@@ -225,7 +225,7 @@ export const ProfileSecurityScreen = () => {
 					</TouchableOpacity>
 				</View>
 
-				<View style={styles.securityOptionsContainer}>
+				{/* <View style={styles.securityOptionsContainer}>
 					<Text style={styles.formTitle}>Tùy chọn bảo mật bổ sung</Text>
 
 					<TouchableOpacity style={styles.securityOption}>
@@ -269,7 +269,7 @@ export const ProfileSecurityScreen = () => {
 							color={Colors.gray[400]}
 						/>
 					</TouchableOpacity>
-				</View>
+				</View> */}
 			</ScrollView>
 		</SafeAreaView>
 	);
@@ -282,6 +282,7 @@ const styles = StyleSheet.create({
 	},
 	scrollContainer: {
 		paddingBottom: 30,
+		paddingTop: 20,
 	},
 	formContainer: {
 		backgroundColor: "#fff",

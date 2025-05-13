@@ -46,7 +46,7 @@ api.interceptors.response.use(
 			});
 		}
 		else{
-			console.error("⛔ Axios: ", error.status + " - " + error.config?.url);
+			// console.error("⛔ Axios: ", error.status + " - " + error.config?.url);
 
 		}
 		return Promise.reject(error);
