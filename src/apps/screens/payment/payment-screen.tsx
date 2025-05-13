@@ -4,9 +4,11 @@ import { Colors } from "@/constants";
 import { localePrice } from "@/utils";
 import { AntDesign } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, FlatList } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, ScrollView } from "react-native";
 import Toast from "react-native-toast-message";
-import * as Linking from 'expo-linking';
+import * as Linking from "expo-linking";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { size } from "lodash";
 
 const date: Date[] = [
 	new Date("2025-01-31"),
@@ -17,6 +19,9 @@ const date: Date[] = [
 ];
 
 export const PaymentScreen = () => {
+	const { setOptions, goBack } = useNavigation();
+	const route = useRoute()
+
 	const [selectTime, setSelectTime] = useState<Date>(date[0]);
 	const [adultCount, setAdultCount] = useState<number>(1);
 	const [childCount, setChildCount] = useState<number>(0);
@@ -25,12 +30,46 @@ export const PaymentScreen = () => {
 	const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
 	useEffect(() => {
-		if (adultCount === 0 && childCount === 0 && infantCount === 0) {
-			setIsDisabled(true);
-		} else {
+		setOptions({
+			headerShown: true,
+			headerTitle: "Đặt vé",
+			headerTitleAlign: "start",
+			headerTintColor: Colors.colorBrand.burntSienna[500],
+			headerTitleStyle: {
+				fontSize: 24,
+				fontWeight: "bold",
+				color: Colors.colorBrand.burntSienna[500],
+			},
+			headerStyle: {
+				elevation: 0,
+				shadowColor: "transparent",
+			},
+			headerLeft: () => (
+				<TouchableOpacity
+					style={{ padding: 8 }}
+					onPress={() => {
+						goBack()
+					}}
+				>
+					<AntDesign
+						name="arrowleft"
+						size={24}
+						color={Colors.colorBrand.burntSienna[500]}
+					/>
+				</TouchableOpacity>
+			),
+		});
+	}, []);
+
+	useEffect(() => {
+		if (adultCount > 0 && childCount >= 0 && infantCount >= 0) {
 			setIsDisabled(false);
+		} else {
+			setIsDisabled(true);
+
 		}
-	}, [[adultCount, childCount, infantCount]]);
+
+	}, [adultCount, childCount, infantCount]);
 
 	const handleBookTicket = () => {
 		const totalPrice = adultCount * 2000000 + childCount * 2000000 + infantCount * 2000000;
@@ -38,84 +77,84 @@ export const PaymentScreen = () => {
 	};
 
 	return (
-		<View style={styles.container}>
-			{/* Header */}
-			<View style={styles.headerCard}>
-				<Text style={styles.header}>GIÁ VÉ</Text>
-				<View style={styles.monthSelector}>
-					<SelectDate
-						date={date}
-						selectTime={selectTime}
-						setSelectTime={setSelectTime}
-					/>
-				</View>
-				<Text style={styles.date}>
-					{selectTime.toLocaleString("default", {
-						day: "2-digit",
-						month: "2-digit",
-						year: "numeric",
-					})}
-				</Text>
-			</View>
-
-			{/* Date Section */}
-			<View style={styles.card}>
-				<Text style={styles.sectionTitle}>Thời gian xuất phát</Text>
-				<View style={styles.dateRange}>
-					<Text style={styles.dateLabel}>Ngày đi: 31/01/2025</Text>
-					<Text style={styles.dateLabel}>Ngày về: 22/02/2025</Text>
-				</View>
-			</View>
-
-			{/* Price Section */}
-			<View style={[styles.card, styles.priceSection]}>
-				<Text style={styles.sectionTitle}>Giá Tour</Text>
-				<ItemTypeTicket
-					icon="user"
-					title="Người lớn"
-					description="Từ 12 tuổi trở lên"
-					price={2000000}
-					value={adultCount}
-					setValue={setAdultCount}
-				/>
-				<ItemTypeTicket
-					icon="child"
-					title="Trẻ em"
-					description="Từ 2 tuổi đến 12 tuổi"
-					price={2000000}
-					value={childCount}
-					setValue={setChildCount}
-				/>
-				<ItemTypeTicket
-					icon="baby"
-					title="Em bé"
-					description="Từ 2 tuổi trở xuống"
-					price={2000000}
-					value={infantCount}
-					setValue={setInfantCount}
-				/>
-				<View style={styles.divider} />
-				<View style={styles.totalRow}>
-					<Text style={styles.totalLabel}>Tổng cộng</Text>
-					<Text style={styles.totalPrice}>
-						{localePrice(adultCount * 2000000 + childCount * 2000000 + infantCount * 2000000)}
+		<ScrollView>
+			<View style={styles.container}>
+				{/* Header */}
+				<View style={styles.headerCard}>
+					<Text style={styles.header}>GIÁ VÉ</Text>
+					<View style={styles.monthSelector}>
+						<SelectDate
+							date={date}
+							selectTime={selectTime}
+							setSelectTime={setSelectTime}
+						/>
+					</View>
+					<Text style={styles.date}>
+						{selectTime.toLocaleString("default", {
+							day: "2-digit",
+							month: "2-digit",
+							year: "numeric",
+						})}
 					</Text>
 				</View>
-			</View>
 
-			{/* Button */}
-			<TouchableOpacity
-				style={[
-					styles.button,
-					isDisabled && styles.buttonDisabled,
-				]}
-				onPress={handleBookTicket}
-				disabled={isDisabled}
-				activeOpacity={0.85}
-			>
-				<Text style={styles.buttonText}>Đặt ngay</Text>
-			</TouchableOpacity>
-		</View>
+				{/* Date Section */}
+				<View style={styles.card}>
+					<Text style={styles.sectionTitle}>Thời gian xuất phát</Text>
+					<View style={styles.dateRange}>
+						<Text style={styles.dateLabel}>Ngày đi: 31/01/2025</Text>
+						<Text style={styles.dateLabel}>Ngày về: 22/02/2025</Text>
+					</View>
+				</View>
+
+				{/* Price Section */}
+				<View style={[styles.card, styles.priceSection]}>
+					<Text style={styles.sectionTitle}>Giá Tour</Text>
+					<ItemTypeTicket
+						icon="user"
+						title="Người lớn"
+						description="Từ 12 tuổi trở lên"
+						price={2000000}
+						value={adultCount}
+						setValue={setAdultCount}
+						minValue={1}
+					/>
+					<ItemTypeTicket
+						icon="child"
+						title="Trẻ em"
+						description="Từ 2 tuổi đến 12 tuổi"
+						price={2000000}
+						value={childCount}
+						setValue={setChildCount}
+					/>
+					<ItemTypeTicket
+						icon="baby"
+						title="Em bé"
+						description="Từ 2 tuổi trở xuống"
+						price={2000000}
+						value={infantCount}
+						setValue={setInfantCount}
+					/>
+					<View style={styles.divider} />
+					<View style={styles.totalRow}>
+						<Text style={styles.totalLabel}>Tổng cộng</Text>
+						<Text style={styles.totalPrice}>
+							{localePrice(adultCount * 2000000 + childCount * 2000000 + infantCount * 2000000)}
+						</Text>
+					</View>
+				</View>
+
+				{/* Button */}
+				<TouchableOpacity
+					style={[styles.button, isDisabled && styles.buttonDisabled]}
+					onPress={handleBookTicket}
+					disabled={isDisabled}
+					activeOpacity={0.85}
+				>
+					<Text style={styles.buttonText}>Đặt ngay</Text>
+				</TouchableOpacity>
+			</View>
+		</ScrollView>
 	);
 };
 

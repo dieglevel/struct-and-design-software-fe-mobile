@@ -84,6 +84,9 @@ export const RootScreenApp = () => {
 						/>
 						<Stack.Screen
 							name="PaymentScreen"
+							options={{
+								headerShown: true,
+							}}
 							component={PaymentScreen}
 						/>
 					</Stack.Navigator>

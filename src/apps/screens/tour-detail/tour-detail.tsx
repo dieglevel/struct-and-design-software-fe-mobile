@@ -45,7 +45,8 @@ export const TourDetailScreen = () => {
 	}, [focus]);
 
 	useEffect(() => {
-		const fetchTourData = async () => {
+		if (focus) {
+					const fetchTourData = async () => {
 			try {
 				handleGetTours(setListData);
 			} catch (error) {
@@ -66,7 +67,8 @@ export const TourDetailScreen = () => {
 		};
 
 		fetchTourData();
-	}, []);
+		}
+	}, [focus]);
 
 	const renderTourDestination = (tourDestinations: TourDestinationResponse[] | null) => {
 		// String

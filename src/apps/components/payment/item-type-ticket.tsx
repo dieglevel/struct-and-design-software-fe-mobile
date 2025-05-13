@@ -10,9 +10,10 @@ interface Props {
 	icon: string;
 	value: number;
 	setValue: (value: number) => void;
+	minValue?: number;
 }
 
-export const ItemTypeTicket = ({ title, description, price, value, setValue, icon }: Props) => {
+export const ItemTypeTicket = ({ title, description, price, value, setValue, icon, minValue = 0 }: Props) => {
 	const renderIcon = () => {
 		switch (icon) {
 			case "user":
@@ -75,9 +76,9 @@ export const ItemTypeTicket = ({ title, description, price, value, setValue, ico
 					<AntDesign
 						name="minus"
 						size={16}
-						color={value > 0 ? Colors.colorBrand.burntSienna[500] : Colors.gray[300]}
+						color={value > 0 && value > minValue ? Colors.colorBrand.burntSienna[500] : Colors.gray[300]}
 						onPress={() => {
-							if (value > 0) {
+							if (value > 0 && value > minValue) {
 								setValue(value - 1);
 							}
 						}}
