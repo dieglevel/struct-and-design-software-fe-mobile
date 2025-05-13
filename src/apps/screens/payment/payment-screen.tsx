@@ -22,43 +22,33 @@ export const PaymentScreen = () => {
 	const [childCount, setChildCount] = useState<number>(0);
 	const [infantCount, setInfantCount] = useState<number>(0);
 
-   const [isDisabled, setIsDisabled] = useState<boolean>(false);
+	const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
-   useEffect(() => {
-      if (adultCount === 0 && childCount === 0 && infantCount === 0) {
-         setIsDisabled(true);
-      } else {
-         setIsDisabled(false);
-      }
-   }, [[adultCount, childCount, infantCount]]);
+	useEffect(() => {
+		if (adultCount === 0 && childCount === 0 && infantCount === 0) {
+			setIsDisabled(true);
+		} else {
+			setIsDisabled(false);
+		}
+	}, [[adultCount, childCount, infantCount]]);
 
 	const handleBookTicket = () => {
-
-      const totalPrice = adultCount * 2000000 + childCount * 2000000 + infantCount * 2000000;
-		Linking.openURL("https://docs.expo.dev/versions/latest/sdk/linking/")
+		const totalPrice = adultCount * 2000000 + childCount * 2000000 + infantCount * 2000000;
+		Linking.openURL("https://docs.expo.dev/versions/latest/sdk/linking/");
 	};
-
-
-
 
 	return (
 		<View style={styles.container}>
 			{/* Header */}
-			<View style={{ padding: 16, backgroundColor: Colors.colorBrand.midnightBlue[50], flex: 1 }}>
-				<View style={{ backgroundColor: "white", borderRadius: 8, padding: 16 }}>
-					<Text style={styles.header}>GIÁ VÉ</Text>
-
-					{/* Month Selector */}
-					<View style={styles.monthSelector}>
-						<SelectDate
-							date={date}
-							selectTime={selectTime}
-							setSelectTime={setSelectTime}
-						/>
-					</View>
+			<View style={styles.headerCard}>
+				<Text style={styles.header}>GIÁ VÉ</Text>
+				<View style={styles.monthSelector}>
+					<SelectDate
+						date={date}
+						selectTime={selectTime}
+						setSelectTime={setSelectTime}
+					/>
 				</View>
-
-				{/* Date Section */}
 				<Text style={styles.date}>
 					{selectTime.toLocaleString("default", {
 						day: "2-digit",
@@ -66,86 +56,64 @@ export const PaymentScreen = () => {
 						year: "numeric",
 					})}
 				</Text>
-				<View
-					style={{
-						backgroundColor: "white",
-						borderRadius: 8,
-						justifyContent: "space-around",
-						alignItems: "center",
-						paddingVertical: 16,
-					}}
-				>
-					<Text style={{ fontWeight: "bold", fontSize: 20 }}>Thời gian xuất phát</Text>
-					<View style={styles.dateRange}>
-						<Text
-							style={{
-								fontSize: 16,
-								color: Colors.colorBrand.midnightBlue[950],
-								fontWeight: "500",
-							}}
-						>
-							Ngày đi: 31/01/2025
-						</Text>
-						<Text
-							style={{
-								fontSize: 16,
-								color: Colors.colorBrand.midnightBlue[950],
-								fontWeight: "500",
-							}}
-						>
-							Ngày về: 22/02/2025
-						</Text>
-					</View>
+			</View>
+
+			{/* Date Section */}
+			<View style={styles.card}>
+				<Text style={styles.sectionTitle}>Thời gian xuất phát</Text>
+				<View style={styles.dateRange}>
+					<Text style={styles.dateLabel}>Ngày đi: 31/01/2025</Text>
+					<Text style={styles.dateLabel}>Ngày về: 22/02/2025</Text>
 				</View>
+			</View>
 
-				{/* Price Section */}
-				<View
-					style={[
-						{
-							justifyContent: "center",
-							alignItems: "center",
-							marginTop: 12,
-							backgroundColor: "white",
-							paddingVertical: 16,
-							gap: 8,
-							borderRadius: 8,
-						},
-						styles.priceSection,
-					]}
-				>
-					<Text style={{ fontWeight: "700", fontSize: 20 }}>Giá Tour</Text>
-					<ItemTypeTicket
-						title="Người lớn"
-						description="Từ 12 tuổi trở lên"
-						price={2000000}
-						value={adultCount}
-						setValue={setAdultCount}
-					/>
-
-					<ItemTypeTicket
-						title="Trẻ em"
-						description="Từ 2 tuổi đến 12 tuổi"
-						price={2000000}
-						value={childCount}
-						setValue={setChildCount}
-					/>
-
-					<ItemTypeTicket
-						title="Em bé"
-						description="Từ 2 tuổi trở xuống"
-						price={2000000}
-						value={infantCount}
-						setValue={setInfantCount}
-					/>
+			{/* Price Section */}
+			<View style={[styles.card, styles.priceSection]}>
+				<Text style={styles.sectionTitle}>Giá Tour</Text>
+				<ItemTypeTicket
+					icon="user"
+					title="Người lớn"
+					description="Từ 12 tuổi trở lên"
+					price={2000000}
+					value={adultCount}
+					setValue={setAdultCount}
+				/>
+				<ItemTypeTicket
+					icon="child"
+					title="Trẻ em"
+					description="Từ 2 tuổi đến 12 tuổi"
+					price={2000000}
+					value={childCount}
+					setValue={setChildCount}
+				/>
+				<ItemTypeTicket
+					icon="baby"
+					title="Em bé"
+					description="Từ 2 tuổi trở xuống"
+					price={2000000}
+					value={infantCount}
+					setValue={setInfantCount}
+				/>
+				<View style={styles.divider} />
+				<View style={styles.totalRow}>
+					<Text style={styles.totalLabel}>Tổng cộng</Text>
+					<Text style={styles.totalPrice}>
+						{localePrice(adultCount * 2000000 + childCount * 2000000 + infantCount * 2000000)}
+					</Text>
 				</View>
 			</View>
 
 			{/* Button */}
-			<TouchableOpacity style={[styles.button, {opacity: isDisabled ? 0.5 : 1}]} onPress={handleBookTicket} disabled={isDisabled}>
+			<TouchableOpacity
+				style={[
+					styles.button,
+					isDisabled && styles.buttonDisabled,
+				]}
+				onPress={handleBookTicket}
+				disabled={isDisabled}
+				activeOpacity={0.85}
+			>
 				<Text style={styles.buttonText}>Đặt ngay</Text>
-				<Text style={{ fontSize: 16, color: "white", fontWeight: "bold" }}>
-					{localePrice(adultCount * 2000000 + childCount * 2000000 + infantCount * 2000000)}
-				</Text>
 			</TouchableOpacity>
 		</View>
 	);
@@ -155,67 +123,111 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: Colors.colorBrand.midnightBlue[50],
+		padding: 16,
 	},
-	header: {
-		fontSize: 24,
-		fontWeight: "bold",
-		textAlign: "center",
+	headerCard: {
+		backgroundColor: "#fff",
+		borderRadius: 16,
+		padding: 20,
 		marginBottom: 16,
-	},
-	monthSelector: {
-		flexDirection: "row",
-		justifyContent: "space-around",
-		marginBottom: 8,
+		shadowColor: "#000",
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.08,
+		shadowRadius: 8,
+		elevation: 3,
 		alignItems: "center",
 	},
-	month: {
-		fontSize: 16,
-		color: Colors.colorBrand.midnightBlue[950],
-		paddingVertical: 8,
-		paddingHorizontal: 16,
-		borderRadius: 8,
-	},
-	date: {
-		padding: 8,
-		fontSize: 30,
-		textAlign: "center",
+	header: {
+		fontSize: 26,
 		fontWeight: "bold",
 		color: Colors.colorBrand.burntSienna[500],
 		marginBottom: 8,
+	},
+	monthSelector: {
+		flexDirection: "row",
+		justifyContent: "center",
+		marginBottom: 8,
+		alignItems: "center",
+	},
+	date: {
+		padding: 8,
+		fontSize: 22,
+		textAlign: "center",
+		fontWeight: "bold",
+		color: Colors.colorBrand.midnightBlue[700],
+		marginBottom: 0,
+	},
+	card: {
+		backgroundColor: "#fff",
+		borderRadius: 16,
+		padding: 20,
+		marginBottom: 16,
+		shadowColor: "#000",
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.08,
+		shadowRadius: 8,
+		elevation: 2,
+	},
+	sectionTitle: {
+		fontWeight: "700",
+		fontSize: 18,
+		color: Colors.colorBrand.midnightBlue[900],
+		marginBottom: 10,
 	},
 	dateRange: {
 		width: "100%",
 		flexDirection: "row",
 		justifyContent: "space-between",
-		paddingHorizontal: 16,
+		paddingHorizontal: 8,
 		marginTop: 8,
 	},
+	dateLabel: {
+		fontSize: 16,
+		color: Colors.colorBrand.midnightBlue[950],
+		fontWeight: "500",
+	},
 	priceSection: {
-		marginBottom: 16,
+		gap: 8,
 	},
-	priceRow: {
+	divider: {
+		height: 1,
+		backgroundColor: Colors.gray[200],
+		marginVertical: 12,
+	},
+	totalRow: {
 		flexDirection: "row",
 		justifyContent: "space-between",
 		alignItems: "center",
-		marginBottom: 8,
 	},
-	counter: {
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "space-between",
-		width: 60,
+	totalLabel: {
+		fontSize: 18,
+		fontWeight: "bold",
+		color: Colors.colorBrand.burntSienna[500],
+	},
+	totalPrice: {
+		fontSize: 20,
+		fontWeight: "bold",
+		color: Colors.colorBrand.burntSienna[700],
 	},
 	button: {
 		backgroundColor: Colors.colorBrand.burntSienna[500],
-		padding: 16,
-		paddingHorizontal: 32,
+		paddingVertical: 18,
+		borderRadius: 16,
 		alignItems: "center",
-		justifyContent: "space-between",
-		flexDirection: "row",
+		marginTop: 8,
+		shadowColor: "#000",
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.12,
+		shadowRadius: 6,
+		elevation: 2,
+	},
+	buttonDisabled: {
+		backgroundColor: Colors.colorBrand.burntSienna[200],
 	},
 	buttonText: {
 		color: "#fff",
 		fontSize: 20,
 		fontWeight: "bold",
+		letterSpacing: 1,
 	},
 });
