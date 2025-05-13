@@ -6,7 +6,7 @@ import BookingButton from "../../components/ui/booking-btn";
 import { Divider } from "react-native-paper";
 import TourDetail from "@/apps/components/ui/tour-detail-tabview";
 import { useEffect, useState, useRef } from "react";
-import { useIsFocused, useRoute } from "@react-navigation/native";
+import { useIsFocused, useNavigation, useRoute } from "@react-navigation/native";
 import { getTourDetails } from "@/services/tour-service";
 import { TourDetailRouteProp } from "@/libs/navigation";
 import { Tour, TourDestinationResponse } from "@/types/implement";
@@ -16,6 +16,8 @@ import React from "react";
 
 export const TourDetailScreen = () => {
 	const route = useRoute<TourDetailRouteProp>();
+
+	const { setOptions } = useNavigation();
 
 	const tourId = route.params?.tourId;
 
@@ -31,6 +33,12 @@ export const TourDetailScreen = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	const focus = useIsFocused();
+
+	useEffect(() => {
+		if (data?.name) {
+			setOptions({ title: data.name });
+		}
+	}, [data?.name]);
 
 	useEffect(() => {
 		setIsLoading(true);
@@ -75,6 +83,7 @@ export const TourDetailScreen = () => {
 		return destinationString.slice(0, -3); // Remove the last " - "
 	};
 
+
 	return (
 		<>
 			{isLoading ? (
@@ -82,7 +91,6 @@ export const TourDetailScreen = () => {
 			) : (
 				<View
 					style={{
-						marginTop: 10,
 						backgroundColor: Colors.gray[0],
 						flex: 1,
 						paddingHorizontal: 10,
@@ -94,7 +102,7 @@ export const TourDetailScreen = () => {
 						data={listData}
 						renderItem={({ item }) => <TourItem tour={item} />}
 						keyExtractor={(item, index) => index.toString()}
-						style={{ marginBottom: 20 }}
+						style={{ marginBottom: 20, padding: 4 }}
 						contentContainerStyle={{ paddingBottom: 50 }} // Tạo khoảng cách để không bị che
 						ListHeaderComponent={
 							<View style={[styles.container, { gap: 8 }]}>
@@ -224,6 +232,7 @@ const styles = StyleSheet.create({
 		width: "100%",
 		height: "100%",
 		borderRadius: 10,
+		marginRight: 4
 	},
 	paginationContainer: {
 		position: "absolute",
@@ -303,7 +312,6 @@ const styles = StyleSheet.create({
 	},
 	// backgroundColor: "#fff",
 });
-
 
 const commentData = [
 	{

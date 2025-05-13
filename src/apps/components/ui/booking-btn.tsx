@@ -1,20 +1,33 @@
 import { Colors } from "@/constants";
+import { navigate } from "@/libs/navigation/navigationService";
 import { RootState, useAppDispatch } from "@/libs/redux/redux.config";
 import { addFavoriteTour, fetchFavoriteTours, removeFavoriteTour } from "@/libs/redux/thunks/tour.thunk";
 import { Tour } from "@/types/implement";
 import { FontAwesome } from "@expo/vector-icons";
+import { is } from "date-fns/locale";
+import { useState } from "react";
 import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
 import Toast from "react-native-toast-message";
 import { useSelector } from "react-redux";
 
 const BookingButton = ({ tour }: { tour: Tour }) => {
+	const [isSubbmitFavorite, setIsSubmitFavorite] = useState<boolean>(false);
+
 	const dispatch = useAppDispatch();
 	const favoriteItem = useSelector(
 		(state: RootState) => state.favorite.data?.some((favorite) => favorite.tour.tourId === tour.tourId) ?? false,
 	);
 
+	const handleBooking = () => {
+		navigate("PaymentScreen", {
+			tourId: tour.tourId,
+		});
+	};
+
 	const handleToggleFavorite = async () => {
 		try {
+			setIsSubmitFavorite(true);
 			if (!favoriteItem) {
 				// Add to favorite
 				const result = await dispatch(addFavoriteTour(tour.tourId ?? ""));
@@ -50,36 +63,7 @@ const BookingButton = ({ tour }: { tour: Tour }) => {
 				text1: "Có lỗi xảy ra",
 			});
 		}
-	};
-
-	const handleAddFavorite = async () => {
-		try {
-			const result = await dispatch(addFavoriteTour(tour.tourId ?? ""));
-
-			if (addFavoriteTour.fulfilled.match(result)) {
-				await dispatch(fetchFavoriteTours());
-				Toast.show({
-					type: "success",
-					text1: "Đã thêm vào yêu thích!",
-					visibilityTime: 2000,
-					autoHide: true,
-				});
-			} else {
-				Toast.show({
-					type: "error",
-					text1: "Thêm yêu thích thất bại",
-					visibilityTime: 2000,
-					autoHide: true,
-				});
-			}
-		} catch (error) {
-			Toast.show({
-				type: "error",
-				text1: "Thêm yêu thích thất bại",
-				visibilityTime: 2000,
-				autoHide: true,
-			});
-		}
+		setIsSubmitFavorite(false);
 	};
 
 	return (
@@ -87,14 +71,23 @@ const BookingButton = ({ tour }: { tour: Tour }) => {
 			<TouchableOpacity
 				style={styles.favoriteButton}
 				onPress={handleToggleFavorite}
+				disabled={isSubbmitFavorite}
+				activeOpacity={isSubbmitFavorite ? 1 : 0.7}
 			>
-				<FontAwesome
-					name={favoriteItem ? "heart" : "heart-o"}
-					size={20}
-					color={favoriteItem ? Colors.colorBrand.burntSienna[500] : Colors.gray[500]}
-				/>
+				{isSubbmitFavorite ? (
+					<ActivityIndicator
+						size="small"
+						color={Colors.colorBrand.burntSienna[500]}
+					/>
+				) : (
+					<FontAwesome
+						name={favoriteItem ? "heart" : "heart-o"}
+						size={20}
+						color={favoriteItem ? Colors.colorBrand.burntSienna[500] : Colors.gray[500]}
+					/>
+				)}
 			</TouchableOpacity>
-			<TouchableOpacity style={styles.bookingButton}>
+			<TouchableOpacity style={styles.bookingButton} onPress={handleBooking}>
 				<Text style={styles.bookingText}>Đặt ngay ↗</Text>
 			</TouchableOpacity>
 		</View>

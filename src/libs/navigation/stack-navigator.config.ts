@@ -9,16 +9,6 @@ export type RootStackParamList = {
 	RegisterScreen: undefined;
 	ForgotPasswordScreen: undefined;
 	WelcomeScreen: undefined;
-	// Register: undefined;
-	// ProductDetail: { productId: string };
-	// SubCategory: { categoryId: string };
-	// PaymentOption: { selectedItems: CartItem[]; totalPrice: number };
-	// Order: undefined;
-	// OrderDetail: { order: Order };
-	// Feedback: undefined;
-	// PaymentResult: undefined;
-	// Cart: { productId: string; callback: () => void };
-	// ChatAdmin: { userId: string };
 	TourDetailScreen: { tourId: string };
 	ProfileScreen: undefined;
 	ProfileScreenBooking: undefined;
@@ -37,7 +27,10 @@ export type RootStackParamList = {
 		categoryImage: string;
 		categoryDescription: string;
 	};
-	PaymentScreen: undefined
+	PaymentScreen: {
+		tourId: string;
+		
+	}
 };
 
 declare global {

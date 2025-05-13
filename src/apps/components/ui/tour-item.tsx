@@ -68,13 +68,13 @@ export const TourItem = React.memo(({ discount = 0, tour, rating = 3.5, horizont
 				</LinearGradient>
 
 				{/* Favorite button */}
-				<TouchableOpacity style={styles.favoriteButton}>
+				{/* <TouchableOpacity style={styles.favoriteButton}>
 					<Ionicons
 						name="heart-outline"
 						size={20}
 						color="#fff"
 					/>
-				</TouchableOpacity>
+				</TouchableOpacity> */}
 
 				{discount > 0 && (
 					<View style={styles.discountBadge}>
@@ -220,6 +220,7 @@ const styles = StyleSheet.create({
 		fontSize: 12,
 		color: Colors.gray[700],
 		marginLeft: 4,
+		fontWeight: "bold"
 	},
 	priceContainer: {
 		flexDirection: "row",
