@@ -87,7 +87,7 @@ const ProfileScreenBooking = () => {
 
 						<View style={styles.userInfo}>
 							<Text style={styles.userName}>{user?.fullName || "User Name"}</Text>
-							<Text style={styles.userLevel}>{user?.gender === 0 ? "Nam": "Nữ"}</Text>
+							<Text style={styles.userLevel}>{user?.gender === 0 ? "Nam" : "Nữ"}</Text>
 							{/* <View style={styles.badge}>
 								<MaterialIcons
 									name="star"
@@ -208,9 +208,9 @@ const ProfileScreenBooking = () => {
 				<View style={styles.section}>
 					<View style={styles.sectionHeader}>
 						<Text style={styles.sectionTitle}>Đã Thích</Text>
-						<TouchableOpacity>
+						{/* <TouchableOpacity>
 							<Text style={styles.seeAllText}>Xem tất cả</Text>
-						</TouchableOpacity>
+						</TouchableOpacity> */}
 					</View>
 
 					{favoriteLoading ? (
@@ -235,7 +235,9 @@ const ProfileScreenBooking = () => {
 							renderItem={({ item }) => (
 								<TouchableOpacity
 									style={styles.savedPlaceItem}
-									onPress={() => navigate.navigate("TourDetailScreen", { tourId: item.tour.tourId })}
+									onPress={() =>
+										navigate.navigate("TourDetailScreen", { tourId: item.tour.tourId })
+									}
 								>
 									<Image
 										source={{
@@ -279,14 +281,14 @@ const ProfileScreenBooking = () => {
 				<View style={styles.section}>
 					<View style={styles.sectionHeader}>
 						<Text style={styles.sectionTitle}>Tour Đã Xem Gần Đây</Text>
-						<TouchableOpacity>
+						{/* <TouchableOpacity>
 							<Text style={styles.seeAllText}>Xem tất cả</Text>
-						</TouchableOpacity>
+						</TouchableOpacity> */}
 					</View>
 
 					{historyLoading ? (
 						<View style={styles.loadingContainer}>
-														<ActivityIndicator
+							<ActivityIndicator
 								size="large"
 								color={Colors.colorBrand.burntSienna[500]}
 							/>
@@ -300,7 +302,9 @@ const ProfileScreenBooking = () => {
 							<TouchableOpacity
 								key={booking.tour.tourId}
 								style={styles.bookingItem}
-								onPress={() => navigate.navigate("TourDetailScreen", { tourId: booking.tour.tourId })}
+								onPress={() =>
+									navigate.navigate("TourDetailScreen", { tourId: booking.tour.tourId })
+								}
 							>
 								<Image
 									source={{
@@ -407,6 +411,7 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 16,
 		borderBottomWidth: 1,
 		borderBottomColor: "#e0e0e0",
+		
 	},
 	headerContent: {
 		flexDirection: "row",
@@ -495,6 +500,7 @@ const styles = StyleSheet.create({
 		backgroundColor: Colors.gray[300],
 	},
 	section: {
+		marginHorizontal: 8,
 		backgroundColor: "#fff",
 		marginTop: 16,
 		paddingHorizontal: 16,

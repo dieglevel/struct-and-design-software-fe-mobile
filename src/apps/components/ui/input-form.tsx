@@ -77,6 +77,7 @@ export const InputForm = ({
 						validateInput(text);
 					}}
 					placeholder={placeholder}
+					placeholderTextColor={Colors.gray[500]}
 					secureTextEntry={secureTextEntry}
 					style={[Styles.flex, {color: Colors.gray[950]}]}
 					onFocus={() => setIsFocus(true)}
