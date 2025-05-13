@@ -1,6 +1,6 @@
-import { NavigationContainer } from "@react-navigation/native";
+import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
 import { LoginScreen, PaymentScreen, SignupScreen } from "@/apps/screens";
-import { Stack } from "@/libs/navigation";
+import { RootStackParamList, Stack } from "@/libs/navigation";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BottomTabScreenApp } from "./bottom-tab-acreen-app";
 import { navigationRef } from "@/libs/navigation/navigationService";
@@ -12,7 +12,10 @@ import { useEffect, useState } from "react";
 import { getProfile } from "@/services/user-service";
 import { setUser } from "@/libs/redux/stores/user.store.";
 import { LoadingSpin } from "../components";
+import * as Linking from 'expo-linking';
+
 import React from "react";
+const prefix = Linking.createURL('/');
 
 export const RootScreenApp = () => {
 	const dispatch = useDispatch();
@@ -31,14 +34,29 @@ export const RootScreenApp = () => {
 		getUser();
 	}, []);
 
+	const linking: LinkingOptions<RootStackParamList> = {
+		prefixes: [prefix, 'https://app.example.com', "myapp://"],
+		config: {
+			screens: {
+				WelcomeScreen: "welcome",
+				LoginScreen: "login",
+				RegisterScreen: "register",
+				ForgotPasswordScreen: "forgot-password",
+				PaymentScreen: "payment",
+				
+
+			},
+		},
+	}
+
 	return (
 		<>
 			{isLoading ? (
 				<LoadingSpin />
 			) : (
-				<NavigationContainer ref={navigationRef}>
+				<NavigationContainer ref={navigationRef} linking={linking}>
 					<Stack.Navigator
-						initialRouteName="PaymentScreen"
+						initialRouteName="LoginScreen"
 						screenOptions={{
 							headerShown: false,
 							animation: "fade_from_bottom",

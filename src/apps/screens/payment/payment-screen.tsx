@@ -6,6 +6,7 @@ import { AntDesign } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, FlatList } from "react-native";
 import Toast from "react-native-toast-message";
+import * as Linking from 'expo-linking';
 
 const date: Date[] = [
 	new Date("2025-01-31"),
@@ -34,6 +35,7 @@ export const PaymentScreen = () => {
 	const handleBookTicket = () => {
 
       const totalPrice = adultCount * 2000000 + childCount * 2000000 + infantCount * 2000000;
+		Linking.openURL("https://docs.expo.dev/versions/latest/sdk/linking/")
 	};
 
 

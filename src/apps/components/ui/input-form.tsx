@@ -78,7 +78,7 @@ export const InputForm = ({
 					}}
 					placeholder={placeholder}
 					secureTextEntry={secureTextEntry}
-					style={[Styles.flex]}
+					style={[Styles.flex, {color: Colors.gray[950]}]}
 					onFocus={() => setIsFocus(true)}
 					onBlur={handleBlur}
 				/>

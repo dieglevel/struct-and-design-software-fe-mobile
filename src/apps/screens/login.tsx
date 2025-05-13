@@ -17,7 +17,7 @@ import { fetchHistoryTours } from "@/libs/redux/thunks/tour.thunk";
 import { getProfile } from "@/services/user-service";
 
 export const LoginScreen = () => {
-	const [username, setUsername] = useState<string>("hyuga");
+	const [username, setUsername] = useState<string>("client");
 	const [password, setPassword] = useState<string>("123456");
 	const dispatch = useAppDispatch();
 	const [isShowPassword, setIsShowPassword] = useState<boolean>(false);
