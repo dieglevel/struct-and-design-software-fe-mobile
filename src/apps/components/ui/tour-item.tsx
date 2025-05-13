@@ -137,15 +137,11 @@ const styles = StyleSheet.create({
 		backgroundColor: "#fff",
 		borderRadius: 16,
 		marginVertical: 10,
-		shadowColor: Colors.colorBrand.midnightBlue[950],
-		overflow: "hidden",
-		shadowOffset: {
-			width: 0,
-			height: 3,
-		},
+		shadowColor: "#000",
+		shadowOffset: { width: 0, height: 2 },
 		shadowOpacity: 0.15,
-		shadowRadius: 8,
-		elevation: 5,
+		shadowRadius: 6,
+		elevation: 4,
 	},
 	horizontalContainer: {
 		width: cardWidth,
@@ -211,6 +207,8 @@ const styles = StyleSheet.create({
 	},
 	infoRow: {
 		flexDirection: "row",
+		flex: 1,
+		justifyContent: "space-between",
 		marginBottom: 8,
 	},
 	infoItem: {
