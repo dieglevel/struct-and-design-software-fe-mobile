@@ -57,7 +57,7 @@ export const ProfileDetailsScreen = () => {
 		const fetchProfile = async () => {
 			try {
 				const response = await getProfile();
-				if (response.statusCode === 200) {
+				if (response && response.statusCode === 200) {
 					dispatch(setUser(response.data ?? null));
 				} else {
 					console.error("Error fetching profile:", response?.message ?? "Unknown error");
@@ -242,10 +242,11 @@ export const ProfileDetailsScreen = () => {
 							isVisible={isDatePickVisible}
 							onConfirm={handleConfirm}
 							mode="date"
-							display="default"
+							display="compact"
 							onCancel={hideDatePicker}
 							maximumDate={new Date()}
 							minimumDate={new Date(1900, 0, 1)}
+							
 						/>
 
 						<ProfileInput
@@ -274,7 +275,7 @@ export const ProfileDetailsScreen = () => {
 							{isSaving ? (
 								<ActivityIndicator color="#fff" />
 							) : (
-								<Text style={styles.saveButtonText}>Save Changes</Text>
+								<Text style={styles.saveButtonText}>Lưu thông tin</Text>
 							)}
 						</TouchableOpacity>
 					</View>

@@ -1,4 +1,9 @@
 import { Colors } from "@/constants";
+<<<<<<< HEAD
+import { useNavigation } from "@react-navigation/native";
+import React from "react";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+=======
 import { navigate } from "@/libs/navigation/navigationService";
 import { Tour } from "@/types/implement";
 import { localePrice } from "@/utils";
@@ -9,6 +14,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
 import { addHistoryTour } from "@/libs/redux/thunks/tour.thunk";
 import { useAppDispatch } from "@/libs/redux/redux.config";
+>>>>>>> d2bff4eae1769452d1a16a42d6d5e1cde52f804b
 
 interface Props {
 	tour: Tour;
@@ -30,8 +36,14 @@ export const TourItem = React.memo(({ discount = 0, tour, rating = 3.5, horizont
 		navigate("TourDetailScreen", { tourId: tour.tourId });
 	};
 
+	const navigate = useNavigation();
+
 	return (
 		<TouchableOpacity
+<<<<<<< HEAD
+			style={[styles.container, discount > 0 && styles.containerDiscount]}
+			onPress={() => navigate.navigate("TourDetailScreen")}
+=======
 			delayPressIn={500}
 			style={[
 				styles.container,
@@ -39,6 +51,7 @@ export const TourItem = React.memo(({ discount = 0, tour, rating = 3.5, horizont
 				discount > 0 && styles.containerDiscount,
 			]}
 			onPress={handleAddHistory}
+>>>>>>> d2bff4eae1769452d1a16a42d6d5e1cde52f804b
 		>
 			<View style={horizontal ? styles.horizontalImageContainer : styles.imageContainer}>
 				<Image
@@ -68,13 +81,13 @@ export const TourItem = React.memo(({ discount = 0, tour, rating = 3.5, horizont
 				</LinearGradient>
 
 				{/* Favorite button */}
-				<TouchableOpacity style={styles.favoriteButton}>
+				{/* <TouchableOpacity style={styles.favoriteButton}>
 					<Ionicons
 						name="heart-outline"
 						size={20}
 						color="#fff"
 					/>
-				</TouchableOpacity>
+				</TouchableOpacity> */}
 
 				{discount > 0 && (
 					<View style={styles.discountBadge}>
@@ -137,15 +150,11 @@ const styles = StyleSheet.create({
 		backgroundColor: "#fff",
 		borderRadius: 16,
 		marginVertical: 10,
-		shadowColor: Colors.colorBrand.midnightBlue[950],
-		overflow: "hidden",
-		shadowOffset: {
-			width: 0,
-			height: 3,
-		},
+		shadowColor: "#000",
+		shadowOffset: { width: 0, height: 2 },
 		shadowOpacity: 0.15,
-		shadowRadius: 8,
-		elevation: 5,
+		shadowRadius: 6,
+		elevation: 4,
 	},
 	horizontalContainer: {
 		width: cardWidth,
@@ -211,6 +220,8 @@ const styles = StyleSheet.create({
 	},
 	infoRow: {
 		flexDirection: "row",
+		flex: 1,
+		justifyContent: "space-between",
 		marginBottom: 8,
 	},
 	infoItem: {
@@ -222,6 +233,7 @@ const styles = StyleSheet.create({
 		fontSize: 12,
 		color: Colors.gray[700],
 		marginLeft: 4,
+		fontWeight: "bold"
 	},
 	priceContainer: {
 		flexDirection: "row",

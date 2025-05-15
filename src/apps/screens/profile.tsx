@@ -1,16 +1,15 @@
 import React, { useEffect } from "react";
-import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView, FlatList } from "react-native";
+import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView, FlatList, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { updateAvatar } from "@/services/user-service";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AsyncStorageKey } from "@/libs/async-storage";
-import { CommonActions, useNavigation } from "@react-navigation/native";
+import { CommonActions, useIsFocused, useNavigation } from "@react-navigation/native";
 import { AppDispatch, useAppDispatch, useAppSelector } from "@/libs/redux/redux.config";
 import { setUser, reset } from "@/libs/redux/stores/user.store.";
 import { MaterialIcons, Ionicons, FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import { Colors } from "@/constants";
 import imagePicker from "@/services/image-picker";
-import { navigate } from "@/libs/navigation/navigationService";
 import { fetchFavoriteTours, fetchHistoryTours } from "@/libs/redux/thunks/tour.thunk";
 
 const ProfileScreenBooking = () => {
@@ -19,6 +18,8 @@ const ProfileScreenBooking = () => {
 	const history = useAppSelector((state) => state.history.data);
 	const favoriteLoading = useAppSelector((state) => state.favorite.loading);
 	const historyLoading = useAppSelector((state) => state.history.loading);
+
+	const navigate = useNavigation();
 
 	const dispatch = useAppDispatch<AppDispatch>();
 	const navigation = useNavigation();
@@ -86,15 +87,15 @@ const ProfileScreenBooking = () => {
 
 						<View style={styles.userInfo}>
 							<Text style={styles.userName}>{user?.fullName || "User Name"}</Text>
-							<Text style={styles.userLevel}>Genius Level 1</Text>
-							<View style={styles.badge}>
+							<Text style={styles.userLevel}>{user?.gender === 0 ? "Nam" : "Nữ"}</Text>
+							{/* <View style={styles.badge}>
 								<MaterialIcons
 									name="star"
 									size={12}
 									color="#fff"
 								/>
 								<Text style={styles.badgeText}>10% Genius discount</Text>
-							</View>
+							</View> */}
 						</View>
 					</View>
 
@@ -122,7 +123,7 @@ const ProfileScreenBooking = () => {
 
 					<TouchableOpacity
 						style={styles.menuItem}
-						onPress={() => navigate("ProfileDetailsScreen")}
+						onPress={() => navigate.navigate("ProfileDetailsScreen")}
 					>
 						<View style={styles.menuIconContainer}>
 							<Ionicons
@@ -144,7 +145,7 @@ const ProfileScreenBooking = () => {
 
 					<TouchableOpacity
 						style={styles.menuItem}
-						onPress={() => navigate("ProfileSecurityScreen")}
+						onPress={() => navigate.navigate("ProfileSecurityScreen")}
 					>
 						<View style={styles.menuIconContainer}>
 							<Ionicons
@@ -207,14 +208,17 @@ const ProfileScreenBooking = () => {
 				<View style={styles.section}>
 					<View style={styles.sectionHeader}>
 						<Text style={styles.sectionTitle}>Đã Thích</Text>
-						<TouchableOpacity>
+						{/* <TouchableOpacity>
 							<Text style={styles.seeAllText}>Xem tất cả</Text>
-						</TouchableOpacity>
+						</TouchableOpacity> */}
 					</View>
 
 					{favoriteLoading ? (
 						<View style={styles.loadingContainer}>
-							<Text style={styles.loadingText}>Đang tải...</Text>
+							<ActivityIndicator
+								size="large"
+								color={Colors.colorBrand.burntSienna[500]}
+							/>
 						</View>
 					) : favorites.length === 0 ? (
 						<View style={styles.emptyContainer}>
@@ -227,10 +231,13 @@ const ProfileScreenBooking = () => {
 							showsHorizontalScrollIndicator={false}
 							keyExtractor={(item) => item.tour.tourId}
 							contentContainerStyle={styles.savedPlacesContainer}
+							style={{ paddingHorizontal: 2 }}
 							renderItem={({ item }) => (
 								<TouchableOpacity
 									style={styles.savedPlaceItem}
-									onPress={() => navigate("TourDetailScreen", { tourId: item.tour.tourId })}
+									onPress={() =>
+										navigate.navigate("TourDetailScreen", { tourId: item.tour.tourId })
+									}
 								>
 									<Image
 										source={{
@@ -274,14 +281,17 @@ const ProfileScreenBooking = () => {
 				<View style={styles.section}>
 					<View style={styles.sectionHeader}>
 						<Text style={styles.sectionTitle}>Tour Đã Xem Gần Đây</Text>
-						<TouchableOpacity>
+						{/* <TouchableOpacity>
 							<Text style={styles.seeAllText}>Xem tất cả</Text>
-						</TouchableOpacity>
+						</TouchableOpacity> */}
 					</View>
 
 					{historyLoading ? (
 						<View style={styles.loadingContainer}>
-							<Text style={styles.loadingText}>Đang tải...</Text>
+							<ActivityIndicator
+								size="large"
+								color={Colors.colorBrand.burntSienna[500]}
+							/>
 						</View>
 					) : history.length === 0 ? (
 						<View style={styles.emptyContainer}>
@@ -292,7 +302,9 @@ const ProfileScreenBooking = () => {
 							<TouchableOpacity
 								key={booking.tour.tourId}
 								style={styles.bookingItem}
-								onPress={() => navigate("TourDetailScreen", { tourId: booking.tour.tourId })}
+								onPress={() =>
+									navigate.navigate("TourDetailScreen", { tourId: booking.tour.tourId })
+								}
 							>
 								<Image
 									source={{
@@ -399,6 +411,7 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 16,
 		borderBottomWidth: 1,
 		borderBottomColor: "#e0e0e0",
+		
 	},
 	headerContent: {
 		flexDirection: "row",
@@ -487,6 +500,7 @@ const styles = StyleSheet.create({
 		backgroundColor: Colors.gray[300],
 	},
 	section: {
+		marginHorizontal: 8,
 		backgroundColor: "#fff",
 		marginTop: 16,
 		paddingHorizontal: 16,
