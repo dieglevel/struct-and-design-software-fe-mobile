@@ -13,7 +13,8 @@
 		"moduleResolution": "Node",
 		"esModuleInterop": true,
 		"skipLibCheck": true,
-		"forceConsistentCasingInFileNames": true
+		"forceConsistentCasingInFileNames": true,
+		"jsx": "react-native"
 	},
 	"include": ["**/*.ts", "**/*.tsx", "./src"],
 	"exclude": ["node_modules", "build", "**/__mocks__/*", "**/__tests__/*"]

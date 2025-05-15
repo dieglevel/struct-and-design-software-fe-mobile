@@ -1,31 +1,67 @@
 {
-     "expo": {
-          "name": "structure-and-design-software",
-          "slug": "structure-and-design-software",
-          "version": "1.0.0",
-          "orientation": "portrait",
-          "icon": "./src/assets/images/logo.png",
-          "userInterfaceStyle": "light",
-          "newArchEnabled": true,
-          "splash": {
-               "image": "./src/assets/images/logo.png",
-               "resizeMode": "contain",
-               "backgroundColor": "#ffffff"
+  "expo": {
+    "name": "structure-and-design-software",
+    "slug": "structure-and-design-software",
+    "version": "1.0.0",
+    "scheme": "myapp",
+    "deepLinking": true,
+    "orientation": "portrait",
+    "icon": "./src/assets/images/logo.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./src/assets/images/logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "jsEngine": "jsc"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./src/assets/images/logo.png",
+        "backgroundColor": "#ffffff"
+      },
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": {
+            "scheme": "myapp"
           },
-          "ios": {
-               "supportsTablet": true,
-               "jsEngine": "jsc"
-          },
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        }
+      ],
+      "package": "com.anonymous.structureanddesignsoftware"
+    },
+    "web": {
+      "favicon": "./src/assets/images/logo.png"
+    },
+    "jsEngine": "hermes",
+    "plugins": [
+      "expo-font",
+      [
+        "expo-build-properties",
+        {
           "android": {
-               "adaptiveIcon": {
-                    "foregroundImage": "./src/assets/images/logo.png",
-                    "backgroundColor": "#ffffff"
-               }
-          },
-          "web": {
-               "favicon": "./src/assets/images/logo.png"
-          },
-          "jsEngine": "hermes",
-          "plugins": ["expo-font"]
-     }
+            "usesCleartextTraffic": true
+          }
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "299c3a94-7d97-40a6-bcb4-007fe17e35a4"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/299c3a94-7d97-40a6-bcb4-007fe17e35a4"
+    }
+  }
 }

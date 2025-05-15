@@ -2,16 +2,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { ProgressBar } from "react-native-paper";
 import { FontAwesome } from "@expo/vector-icons";
 import { Colors } from "@/constants";
-
-interface RatingDetail {
-	label: string;
-	value: number;
-}
-
-interface RatingProps {
-	rating: number;
-	ratingDetails: RatingDetail[];
-}
+import { RatingProps } from "@/types/implement";
 
 const RatingTour = ({ rating, ratingDetails }: RatingProps) => {
 	return (
@@ -28,16 +19,13 @@ const RatingTour = ({ rating, ratingDetails }: RatingProps) => {
 
 			<View style={styles.divider} />
 
-			{ratingDetails.map((item, index) => (
-				<>
-					<View
-						key={index}
-						style={styles.detailContainer}
-					>
+			{ratingDetails?.map((item, index) => (
+				<View key={index}>
+					<View style={styles.detailContainer}>
 						<Text style={styles.label}>{item.label}</Text>
 						<View style={{ flex: 1 }}>
 							<ProgressBar
-								progress={item.value / 100}
+								progress={item.value === undefined ? 0 : item.value / 100}
 								color="#497e91"
 								style={styles.progressBar}
 							/>
@@ -45,7 +33,7 @@ const RatingTour = ({ rating, ratingDetails }: RatingProps) => {
 						<Text style={styles.percent}>{item.value}%</Text>
 					</View>
 					{index === 3 && <View style={styles.divider} />}
-				</>
+				</View>
 			))}
 		</View>
 	);

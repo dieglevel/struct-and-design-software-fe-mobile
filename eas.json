@@ -1,0 +1,38 @@
+{
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_BACKEND_URL": "EXPO_PUBLIC_BACKEND_URL"
+      }
+    },
+    "preview": {
+      "environment": "preview"
+    },
+    "production": {
+      "env": {
+        "EXPO_PUBLIC_BACKEND_URL": "EXPO_PUBLIC_BACKEND_URL"
+      }
+    },
+    "preview2": {
+      "autoIncrement": true,
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_BACKEND_URL": "EXPO_PUBLIC_BACKEND_URL"
+      }
+    },
+    "dapp-store": {
+      "channel": "production",
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_BACKEND_URL": "EXPO_PUBLIC_BACKEND_URL"
+      }
+    }
+  },
+  "cli": {
+    "appVersionSource": "remote"
+  }
+}

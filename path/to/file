@@ -1,0 +1,37 @@
+{isLoading ? (
+  <View style={styles.loadingContainer}>
+    <ActivityIndicator
+      size="large"
+      color={Colors.colorBrand.burntSienna[500]}
+    />
+    <Text style={styles.loadingText}>Đang tìm kiếm...</Text>
+  </View>
+) : searchText.trim().length > 0 && results.length === 0 ? (
+  <View style={styles.emptyContainer}>
+    <Ionicons
+      name="search-outline"
+      size={50}
+      color={Colors.gray[300]}
+    />
+    <Text style={styles.emptyText}>Không tìm thấy dữ liệu</Text>
+    <Text style={styles.emptySubText}>Vui lòng thử lại với từ khóa khác</Text>
+  </View>
+) : (
+  <FlatList
+    data={results}
+    renderItem={renderTourItem}
+    keyExtractor={(item) => item.tourId?.toString() || Math.random().toString()}
+    contentContainerStyle={styles.listContent}
+    showsVerticalScrollIndicator={false}
+  />
+)}
+
+<Text style={styles.resultsTitle}>
+  {isLoading
+    ? "Đang tìm kiếm..."
+    : results.length > 0
+    ? `Kết quả tìm kiếm (${results.length})`
+    : searchText.trim().length > 0
+    ? "Không có kết quả phù hợp"
+    : "Nhập từ khóa để tìm kiếm"}
+</Text> 

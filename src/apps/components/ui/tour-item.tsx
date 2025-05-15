@@ -1,132 +1,267 @@
 import { Colors } from "@/constants";
+<<<<<<< HEAD
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+=======
+import { navigate } from "@/libs/navigation/navigationService";
+import { Tour } from "@/types/implement";
+import { localePrice } from "@/utils";
+import React from "react";
+import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons } from "@expo/vector-icons";
+import { useDispatch } from "react-redux";
+import { addHistoryTour } from "@/libs/redux/thunks/tour.thunk";
+import { useAppDispatch } from "@/libs/redux/redux.config";
+>>>>>>> d2bff4eae1769452d1a16a42d6d5e1cde52f804b
 
-interface TourItemProps {
-	image: string;
-	name: string;
+interface Props {
+	tour: Tour;
 	rating?: number;
-	price: number;
 	discount?: number;
-	duration: string;
+	horizontal?: boolean;
 }
 
-export const TourItem: React.FC<TourItemProps> = ({ image, name, rating = 0, price, discount = 0, duration }) => {
-	const discountedPrice = price - (price * discount) / 100;
+export const TourItem = React.memo(({ discount = 0, tour, rating = 3.5, horizontal = false }: Props) => {
+	const dispatch = useAppDispatch();
+	const discountCalculation = (price: number, discount: number) => {
+		if (discount > 0) {
+			return price - (price * discount) / 100;
+		}
+		return price;
+	};
+	const handleAddHistory = async () => {
+		await dispatch(addHistoryTour(tour.tourId));
+		navigate("TourDetailScreen", { tourId: tour.tourId });
+	};
 
 	const navigate = useNavigation();
 
 	return (
 		<TouchableOpacity
+<<<<<<< HEAD
 			style={[styles.container, discount > 0 && styles.containerDiscount]}
 			onPress={() => navigate.navigate("TourDetailScreen")}
+=======
+			delayPressIn={500}
+			style={[
+				styles.container,
+				horizontal ? styles.horizontalContainer : null,
+				discount > 0 && styles.containerDiscount,
+			]}
+			onPress={handleAddHistory}
+>>>>>>> d2bff4eae1769452d1a16a42d6d5e1cde52f804b
 		>
-			<Image
-				source={{ uri: image }}
-				style={styles.image}
-			/>
+			<View style={horizontal ? styles.horizontalImageContainer : styles.imageContainer}>
+				<Image
+					source={{ uri: tour.thumbnail }}
+					style={styles.image}
+					resizeMode="cover"
+				/>
+
+				{/* Location tag */}
+				<LinearGradient
+					colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.7)"]}
+					style={styles.gradientOverlay}
+				>
+					<View style={styles.locationContainer}>
+						<Ionicons
+							name="location"
+							size={14}
+							color="#fff"
+						/>
+						<Text
+							style={styles.locationText}
+							numberOfLines={1}
+						>
+							{tour.name ? tour.name.split(" - ")[1] || "Việt Nam" : "Việt Nam"}
+						</Text>
+					</View>
+				</LinearGradient>
+
+				{/* Favorite button */}
+				{/* <TouchableOpacity style={styles.favoriteButton}>
+					<Ionicons
+						name="heart-outline"
+						size={20}
+						color="#fff"
+					/>
+				</TouchableOpacity> */}
+
+				{discount > 0 && (
+					<View style={styles.discountBadge}>
+						<Text style={styles.discountText}>-{discount}%</Text>
+					</View>
+				)}
+			</View>
+
 			<View style={styles.details}>
-				<View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-					<Text
-						style={styles.name}
-						numberOfLines={1}
-					>
-						{name}
-					</Text>
+				<Text
+					style={styles.name}
+					numberOfLines={horizontal ? 1 : 2}
+				>
+					{tour.name}
+				</Text>
 
-					<Text style={styles.duration}>⏱ {duration}</Text>
+				<View style={styles.infoRow}>
+					<View style={styles.infoItem}>
+						<Ionicons
+							name="time-outline"
+							size={14}
+							color={Colors.gray[500]}
+						/>
+						<Text style={styles.infoText}>{tour.duration}</Text>
+					</View>
+
+					<View style={styles.infoItem}>
+						<Ionicons
+							name="star"
+							size={14}
+							color="#FFD700"
+						/>
+						<Text style={styles.infoText}>{rating.toFixed(1)}</Text>
+					</View>
 				</View>
-				<View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-					{rating > 0 ? <Text style={styles.rating}>⭐ ({rating.toFixed(1)})</Text> : null}
 
-					<Text style={styles.price}>
-						{discount > 0 ? (
-							<>
-								<Text style={styles.originalPrice}>{price.toLocaleString("vi-VN")} ₫</Text>
-								{"  "}
-								<Text style={styles.discountedPrice}>
-									{discountedPrice.toLocaleString("vi-VN")} ₫
-								</Text>
-							</>
-						) : (
-							<Text>{price.toLocaleString("vi-VN")} ₫</Text>
-						)}
-					</Text>
+				<View style={styles.priceContainer}>
+					{discount > 0 ? (
+						<>
+							<Text style={styles.originalPrice}>{localePrice(tour.price ? tour.price : 0)}</Text>
+							<Text style={styles.discountedPrice}>
+								{localePrice(discountCalculation(tour.price ? tour.price : 0, discount))}
+							</Text>
+						</>
+					) : (
+						<Text style={styles.discountedPrice}>{localePrice(tour.price ? tour.price : 0)}</Text>
+					)}
 				</View>
 			</View>
-			{discount > 0 && <Text style={styles.discountBadge}>-{discount}%</Text>}
 		</TouchableOpacity>
 	);
-};
+});
+
+const { width } = Dimensions.get("window");
+const cardWidth = width * 0.75;
 
 const styles = StyleSheet.create({
 	container: {
 		width: "100%",
-		height: 230,
 		backgroundColor: "#fff",
-		borderRadius: 10,
-		marginVertical: 5,
+		borderRadius: 16,
+		marginVertical: 10,
 		shadowColor: "#000",
-		shadowOpacity: 0.1,
-		shadowRadius: 5,
-		elevation: 2,
-		borderWidth: 1,
-		borderColor: "#F5F5F5",
-		position: "relative",
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.15,
+		shadowRadius: 6,
+		elevation: 4,
+	},
+	horizontalContainer: {
+		width: cardWidth,
+		marginRight: 15,
+		height: 280,
 	},
 	containerDiscount: {
-		borderColor: "#FF6F61",
+		borderWidth: 0,
+	},
+	imageContainer: {
+		width: "100%",
+		height: 180,
+		position: "relative",
+	},
+	horizontalImageContainer: {
+		width: "100%",
+		height: 160,
+		position: "relative",
 	},
 	image: {
 		width: "100%",
-		height: 160,
-		borderTopLeftRadius: 10,
-		borderTopRightRadius: 10,
+		height: "100%",
+	},
+	gradientOverlay: {
+		position: "absolute",
+		bottom: 0,
+		left: 0,
+		right: 0,
+		height: 60,
+		justifyContent: "flex-end",
+		paddingBottom: 10,
+		paddingHorizontal: 12,
+	},
+	locationContainer: {
+		flexDirection: "row",
+		alignItems: "center",
+	},
+	locationText: {
+		color: "#fff",
+		fontSize: 12,
+		marginLeft: 4,
+		fontWeight: "600",
+	},
+	favoriteButton: {
+		position: "absolute",
+		top: 10,
+		right: 10,
+		width: 32,
+		height: 32,
+		borderRadius: 16,
+		backgroundColor: "rgba(0,0,0,0.3)",
+		justifyContent: "center",
+		alignItems: "center",
 	},
 	details: {
-		margin: 10,
-		justifyContent: "space-between",
+		padding: 12,
 	},
 	name: {
 		fontSize: 16,
 		fontWeight: "bold",
 		color: Colors.colorBrand.midnightBlue[950],
+		marginBottom: 8,
 	},
-
-	rating: {
-		fontSize: 14,
-		color: "#000",
+	infoRow: {
+		flexDirection: "row",
+		flex: 1,
+		justifyContent: "space-between",
+		marginBottom: 8,
 	},
-	duration: {
-		fontSize: 14,
-		color: "#555",
+	infoItem: {
+		flexDirection: "row",
+		alignItems: "center",
+		marginRight: 16,
 	},
-	price: {
-		fontSize: 16,
-		fontWeight: "bold",
+	infoText: {
+		fontSize: 12,
+		color: Colors.gray[700],
+		marginLeft: 4,
+		fontWeight: "bold"
+	},
+	priceContainer: {
+		flexDirection: "row",
+		alignItems: "center",
 	},
 	discountedPrice: {
 		fontSize: 16,
 		fontWeight: "bold",
-		color: Colors.colorBrand.midnightBlue[950],
+		color: Colors.colorBrand.burntSienna[600],
 	},
 	originalPrice: {
 		fontSize: 14,
-		color: "#888",
+		color: Colors.gray[500],
 		textDecorationLine: "line-through",
+		marginRight: 8,
 	},
 	discountBadge: {
 		position: "absolute",
 		top: 10,
-		right: 10,
-		backgroundColor: "#fff",
-		color: Colors.colorBrand.midnightBlue[950],
-		textAlign: "center",
+		left: 10,
+		backgroundColor: Colors.colorBrand.burntSienna[500],
 		paddingHorizontal: 8,
-		paddingVertical: 2,
+		paddingVertical: 4,
+		borderRadius: 12,
+	},
+	discountText: {
+		color: "#fff",
 		fontSize: 12,
 		fontWeight: "bold",
-		borderRadius: 5,
 	},
 });

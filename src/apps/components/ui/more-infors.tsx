@@ -1,6 +1,6 @@
 import { Colors } from "@/constants";
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 
 interface InfoSectionProps {
 	title: string;
@@ -31,7 +31,12 @@ interface TourInfoProps {
 
 const TourInfo: React.FC<TourInfoProps> = ({ transport, accommodation, others }) => {
 	return (
-		<View style={styles.container}>
+		<ScrollView
+			style={styles.container}
+			showsVerticalScrollIndicator={false}
+			keyboardShouldPersistTaps="handled"
+			nestedScrollEnabled
+		>
 			<Text style={styles.header}>{"<Header>"}</Text>
 			<InfoSection
 				title="Vận chuyển:"
@@ -45,7 +50,7 @@ const TourInfo: React.FC<TourInfoProps> = ({ transport, accommodation, others })
 				title="Khác:"
 				content={others}
 			/>
-		</View>
+		</ScrollView>
 	);
 };
 

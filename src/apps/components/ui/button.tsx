@@ -7,10 +7,11 @@ interface Props {
 	onPress?: () => void;
 	disabled?: boolean;
 	variant?: "fill" | "outline";
-   style?: ViewStyle;
+	style?: ViewStyle;
+	styleButton?: ViewStyle;
 }
 
-export const Button = ({ children, onPress, disabled = false, style }: Props) => {
+export const Button = ({ children, onPress, disabled = false, style, styleButton }: Props) => {
 	const handleOnPress = () => {
 		if (disabled == true) {
 			return;
@@ -22,18 +23,21 @@ export const Button = ({ children, onPress, disabled = false, style }: Props) =>
 		<Press
 			onPress={handleOnPress}
 			disabled={disabled}
-         style={{...style}}
+			style={{ ...style }}
 		>
 			<View
-				style={{
-					alignItems: "center",
-					justifyContent: "center",
-					minHeight: 50,
-					backgroundColor: disabled
-						? Colors.colorBrand.burntSienna[300]
-						: Colors.colorBrand.burntSienna[600],
-					borderRadius: 4,
-				}}
+				style={[
+					{
+						alignItems: "center",
+						justifyContent: "center",
+						minHeight: 50,
+						backgroundColor: disabled
+							? Colors.colorBrand.burntSienna[300]
+							: Colors.colorBrand.burntSienna[600],
+						borderRadius: 4,
+					},
+					styleButton,
+				]}
 			>
 				<Text style={[Texts.bold18, { color: Colors.gray[0] }]}>{children}</Text>
 			</View>

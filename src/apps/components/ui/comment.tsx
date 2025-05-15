@@ -2,14 +2,7 @@ import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { Colors } from "@/constants";
-
-interface CommentProps {
-	avatar: string;
-	name: string;
-	date: string;
-	rating: number;
-	comment: string;
-}
+import { CommentProps } from "@/types/implement";
 
 const Comment: React.FC<CommentProps> = ({ avatar, name, date, rating, comment }) => {
 	return (
@@ -27,7 +20,7 @@ const Comment: React.FC<CommentProps> = ({ avatar, name, date, rating, comment }
 								key={index}
 								name="star"
 								size={16}
-								color={index < rating ? "#FFD700" : "#D3D3D3"}
+								color={index < (rating ?? 0) ? "#FFD700" : "#D3D3D3"}
 							/>
 						))}
 					</View>

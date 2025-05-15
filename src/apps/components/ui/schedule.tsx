@@ -2,15 +2,14 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { Colors } from "@/constants";
+import { ScheduleItemProps, TourDestinationResponse } from "@/types/implement";
 
-interface ScheduleItemProps {
-	day: string;
-	route: string;
-	meals: string;
-	description?: string;
+interface Props{
+	schedules: TourDestinationResponse;
+	index: number;
 }
 
-const ScheduleItem: React.FC<ScheduleItemProps> = ({ day, route, meals, description }) => {
+const ScheduleItem = ({schedules, index }:Props) => {
 	const [expanded, setExpanded] = useState<boolean>(false);
 
 	return (
@@ -21,9 +20,8 @@ const ScheduleItem: React.FC<ScheduleItemProps> = ({ day, route, meals, descript
 			>
 				<View>
 					<Text style={styles.title}>
-						{day}: {route}
+						{`${index + 1}. `} {schedules.name}
 					</Text>
-					<Text style={styles.meals}>Số bữa ăn: {meals}</Text>
 				</View>
 				<AntDesign
 					name={expanded ? "up" : "down"}
@@ -32,11 +30,11 @@ const ScheduleItem: React.FC<ScheduleItemProps> = ({ day, route, meals, descript
 				/>
 			</TouchableOpacity>
 
-			{expanded && description && (
-				<View style={styles.content}>
-					<Text style={styles.description}>{description}</Text>
-				</View>
-			)}
+			 {expanded && (
+			 	<View style={styles.content}>
+			 		<Text style={styles.description}>{schedules.description}</Text>
+			 	</View>
+			 )}
 		</View>
 	);
 };
