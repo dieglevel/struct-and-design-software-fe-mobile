@@ -9,7 +9,7 @@ import { getProfile } from "@/services/user-service";
 export const fetchUserProfile = createAsyncThunk("user/fetchProfile", async (_, { dispatch, rejectWithValue }) => {
 	try {
 		const response = await getProfile();
-		if (response.statusCode === 200) {
+		if (response?.statusCode === 200) {
 			dispatch(setUser(response.data as User));
 			return response.data;
 		} else {

@@ -2,17 +2,11 @@ import { Press, SafeAreaView } from "@/apps/components";
 import { Button, InputForm } from "@/apps/components/ui";
 import { Close, Eye, EyeOff } from "@/assets/svgs";
 import { Colors, Texts } from "@/constants";
-import { register } from "@/services/authService";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { Dimensions, ScrollView, Text, View } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-<<<<<<< HEAD
-=======
-import { format } from "date-fns";
-import { vi } from "date-fns/locale";
 import { registerApi } from "@/services/auth-service";
->>>>>>> d2bff4eae1769452d1a16a42d6d5e1cde52f804b
 import Toast from "react-native-toast-message";
 
 export const SignupScreen = () => {

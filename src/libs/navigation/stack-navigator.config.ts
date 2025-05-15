@@ -7,11 +7,6 @@ export type RootStackParamList = {
 	BottomTabScreenApp: undefined;
 	LoginScreen: undefined;
 	RegisterScreen: undefined;
-<<<<<<< HEAD
-	ForgotPassowrdScreen: undefined;
-	TourDetailScreen: undefined;
-	ForgotPasswordScreen: undefined;
-=======
 	ForgotPasswordScreen: undefined;
 	WelcomeScreen: undefined;
 	TourDetailScreen: { tourId: string };
@@ -34,9 +29,7 @@ export type RootStackParamList = {
 	};
 	PaymentScreen: {
 		tourId: string;
-		
-	}
->>>>>>> d2bff4eae1769452d1a16a42d6d5e1cde52f804b
+	};
 };
 
 declare global {

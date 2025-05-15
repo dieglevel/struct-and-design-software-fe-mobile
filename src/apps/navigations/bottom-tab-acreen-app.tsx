@@ -1,12 +1,6 @@
-<<<<<<< HEAD
-import { HomeScreen, MessageScreen, SearchScreen, UserScreen } from "@/apps/screens";
-import { Tab } from "@/libs/navigation";
-import { Ionicons } from "@expo/vector-icons";
-=======
 import { Tab } from "@/libs/navigation";
 import HomeStack from "../stacks/home-stack";
 import SearchStack from "../stacks/search-stack";
-import MessageStack from "../stacks/message-stack";
 import UserStack from "../stacks/user-stack";
 import HomeIcon from "@/assets/svgs/home";
 import SearchIcon from "@/assets/svgs/search";
@@ -15,7 +9,7 @@ import UserIcon from "@/assets/svgs/user";
 import { TouchableOpacity } from "react-native";
 import { Colors } from "@/constants";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
->>>>>>> d2bff4eae1769452d1a16a42d6d5e1cde52f804b
+import { MessageScreen } from "../screens";
 
 export const BottomTabScreenApp = () => {
 	return (
@@ -83,9 +77,6 @@ export const BottomTabScreenApp = () => {
 		>
 			<Tab.Screen
 				name="HomeStack"
-<<<<<<< HEAD
-				component={HomeScreen}
-=======
 				component={HomeStack}
 				options={({ route }) => {
 					const routeName = getFocusedRouteNameFromRoute(route);
@@ -99,11 +90,10 @@ export const BottomTabScreenApp = () => {
 						},
 					};
 				}}
->>>>>>> d2bff4eae1769452d1a16a42d6d5e1cde52f804b
 			/>
 			<Tab.Screen
 				name="SearchStack"
-				component={SearchScreen}
+				component={SearchStack}
 			/>
 			<Tab.Screen
 				name="MessageStack"
@@ -111,7 +101,7 @@ export const BottomTabScreenApp = () => {
 			/>
 			<Tab.Screen
 				name="UserStack"
-				component={UserScreen}
+				component={UserStack}
 			/>
 		</Tab.Navigator>
 	);

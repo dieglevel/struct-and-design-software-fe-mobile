@@ -1,9 +1,4 @@
 import { Colors } from "@/constants";
-<<<<<<< HEAD
-import { useNavigation } from "@react-navigation/native";
-import React from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-=======
 import { navigate } from "@/libs/navigation/navigationService";
 import { Tour } from "@/types/implement";
 import { localePrice } from "@/utils";
@@ -14,7 +9,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
 import { addHistoryTour } from "@/libs/redux/thunks/tour.thunk";
 import { useAppDispatch } from "@/libs/redux/redux.config";
->>>>>>> d2bff4eae1769452d1a16a42d6d5e1cde52f804b
+import { useNavigation } from "@react-navigation/native";
 
 interface Props {
 	tour: Tour;
@@ -36,14 +31,8 @@ export const TourItem = React.memo(({ discount = 0, tour, rating = 3.5, horizont
 		navigate("TourDetailScreen", { tourId: tour.tourId });
 	};
 
-	const navigate = useNavigation();
-
 	return (
 		<TouchableOpacity
-<<<<<<< HEAD
-			style={[styles.container, discount > 0 && styles.containerDiscount]}
-			onPress={() => navigate.navigate("TourDetailScreen")}
-=======
 			delayPressIn={500}
 			style={[
 				styles.container,
@@ -51,7 +40,6 @@ export const TourItem = React.memo(({ discount = 0, tour, rating = 3.5, horizont
 				discount > 0 && styles.containerDiscount,
 			]}
 			onPress={handleAddHistory}
->>>>>>> d2bff4eae1769452d1a16a42d6d5e1cde52f804b
 		>
 			<View style={horizontal ? styles.horizontalImageContainer : styles.imageContainer}>
 				<Image
@@ -233,7 +221,7 @@ const styles = StyleSheet.create({
 		fontSize: 12,
 		color: Colors.gray[700],
 		marginLeft: 4,
-		fontWeight: "bold"
+		fontWeight: "bold",
 	},
 	priceContainer: {
 		flexDirection: "row",
