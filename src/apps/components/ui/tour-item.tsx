@@ -45,6 +45,8 @@ export const TourItem = React.memo(({ discount = 0, tour, rating = 3.5, horizont
 					source={{ uri: tour.thumbnail }}
 					style={styles.image}
 					resizeMode="cover"
+					borderTopLeftRadius={16}
+					borderTopRightRadius={16}
 				/>
 
 				{/* Location tag */}
@@ -128,9 +130,6 @@ export const TourItem = React.memo(({ discount = 0, tour, rating = 3.5, horizont
 	);
 });
 
-const { width } = Dimensions.get("window");
-const cardWidth = width * 0.75;
-
 const styles = StyleSheet.create({
 	container: {
 		width: "100%",
@@ -144,7 +143,7 @@ const styles = StyleSheet.create({
 		elevation: 4,
 	},
 	horizontalContainer: {
-		width: cardWidth,
+		width: 300,
 		marginRight: 15,
 		height: 280,
 	},

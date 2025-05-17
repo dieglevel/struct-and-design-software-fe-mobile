@@ -42,7 +42,7 @@ const ListItem = ({ listTour, horizontal = true, showTitle = false, title }: Pro
 						discount={Math.random() > 0.6 ? Math.floor(Math.random() * 30) + 5 : 0}
 					/>
 				)}
-				keyExtractor={(item) => item.tourId?.toString() || Math.random().toString()}
+				keyExtractor={(item) => item.tourId?.toString()}
 			/>
 
 			{isLoading ? (
